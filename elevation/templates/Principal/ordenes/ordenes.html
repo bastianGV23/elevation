@@ -1,0 +1,87 @@
+{% extends 'Principal/base.html' %}
+
+{% block title %}Ordenes{% endblock title %}
+
+{% block content %}
+<h1>Ordenes</h1>
+<hr>
+<div class="col-12">
+  <div class="card">
+    <div class="card-header row text-white bg-primary justify-content-between">
+          <div class="col-9">
+              <h4>Lista de ordenes</h4>
+          </div>
+              <a class="btn btn-success" href="{% url 'ordenes:crear' %}"><i class="material-icons">&#xE147;</i> <span>Añadir orden</span></a>			         
+    </div>  
+    </div>
+
+    <div class="card-body">
+        {% if not orden %}
+        <h4>No hay Ordenes creadas</h4>
+        {% else %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre del receptor</th>
+                  <th>Cliente</th>
+                  <th>Tecnico</th>
+                  <th>ID ascensor</th>
+                  <th>Piezas</th>
+                  <th>Reparaciones</th>
+                  <th>Fallas</th>
+                  <th>Hora de inicio</th>
+                  <th>Hora de termino</th>
+                  <th>Modelo de ascensor</th>
+                  <th>E-MAIL</th>
+                  <th>BORRAR</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for ord in orden %}
+                  
+                <tr>
+                   
+                    <td>{{ord.id}}</td>
+                    <td>{{ord.nombreReceptor}}</td>
+                    <td>{{ord.cliente.nombre}}</td>
+                    <td>{{ord.tecnico.first_name}}&nbsp;{{ord.tecnico.last_name}}</td>
+                    <td>{{ord.id_ascensor}}</td>
+                    <td>{{ord.piezas}}</td>
+                    <td>{{ord.reparaciones}}</td>
+                    <td>{{ord.fallas}}</td>
+                    <td>{{ord.hora_inicio}}</td>
+                    <td>{{ord.hora_termino}}</td>
+                    <td>{{ord.modelo_asc}}</td>
+                    <td>{{ord.email}}</td>
+                    <td><a  onclick="return abrir_modal('{% url 'ordenes:eliminar' ord.pk %}')" class="btn" ><i class="material-icons" data-toggle="tooltip" title="Delete" style="color: #F44336;">&#xE872;</i></a></td>
+                    {% endfor %}
+                    
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+        <div id="popup" class="modal fade" role="dialog"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    function abrir_modal(url)
+      {
+              $('#popup').load(url, function()
+              {
+                      $(this).modal('show');
+              });
+              return false;
+      }
+      
+      function cerrar_modal()
+      {
+              $('#popup').modal('hide');
+              return false;
+      }
+  </script> 
+{% endblock content %}

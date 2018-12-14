@@ -1,0 +1,74 @@
+{% extends 'Principal/base.html' %}
+
+{% block title %}Asignaciones{% endblock title %}
+
+{% block content %}
+<h1>Asignaciones</h1>
+<hr>
+<div class="col-12">
+  <div class="card">
+    <div class="card-header row text-white bg-primary justify-content-between">
+          <div class="col-9">
+              <h4>Lista de asignaciones</h4>
+          </div>
+              <a onclick="return abrir_modal('{% url 'asignaciones:crear' %}')" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Añadir asignacion</span></a>			         
+    </div>  
+    </div>
+
+    <div class="card-body">
+        {% if not asigna %}
+        <h4>No hay asignaciones creadas</h4>
+        {% else %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre de cliente</th>
+                  <th>Direccion cliente</th>
+                  <th>Tecnico</th>
+                  <th>Nombre del tecnico</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for asignacion in asigna %}
+                  
+                <tr>
+                   
+                    <td>{{asignacion.id}}</td>
+                    <td>{{asignacion.cli.nombre}}</td>
+                    <td>{{asignacion.cli.direccion}}</td>
+                    <td>{{asignacion.tecnico.username}}</td>
+                    <td>{{asignacion.tecnico.first_name}}&nbsp;{{asignacion.tecnico.last_name}}</td>
+                    <td><a  onclick="return abrir_modal('{% url 'asignaciones:eliminar' asignacion.pk %}')" class="btn" ><i class="material-icons" data-toggle="tooltip" title="Delete" style="color: #F44336;">&#xE872;</i></a></td></td>
+                    {% endfor %}
+                    
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+        <div id="popup" class="modal fade" role="dialog">
+    
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function abrir_modal(url)
+    {
+            $('#popup').load(url, function()
+            {
+                    $(this).modal('show');
+            });
+            return false;
+    }
+    
+    function cerrar_modal()
+    {
+            $('#popup').modal('hide');
+            return false;
+    }
+</script> 
+{% endblock content %}

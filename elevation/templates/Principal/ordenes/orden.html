@@ -1,0 +1,27 @@
+{% extends 'Principal/base.html' %}
+{% block content %}
+    
+    <form role="form" class="container"  method="post">
+        
+        <h2>Iniciar orden</h2>
+        <br>
+                            {% csrf_token %}
+                            {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                           {% endif %}
+                           {{form.as_p}}
+             <input type="submit" class="btn btn-primary" name="submit" value="Generar">
+    </form>
+
+{% endblock content %}

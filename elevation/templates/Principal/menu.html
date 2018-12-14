@@ -1,0 +1,21 @@
+{% extends 'Principal/base.html' %}
+
+{% block title %}Menu{% endblock title %}
+
+{% block content %}
+<div class="jumbotron bg-light">
+    <div class="card text-white bg-info ">
+         <div class="card-body">
+            {% if request.user.is_staff %}
+            <h4 class="card-title">Bienvenido de vuelta {{user.username}}</h4>
+            {% else %}
+            <h4 class="card-title">Bienvenido de vuelta {{user.first_name}}{{user.last_name}}</h4>
+            {% endif %}
+           
+           <p class="card-text">Seleccione una opción del menú</p>
+         </div>
+       </div>
+</div>      
+{% endblock content %}
+    
+    

@@ -1,0 +1,53 @@
+{% extends 'registration/base.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% block title %}Iniciar sesion{% endblock title %}
+{% load staticfiles %}
+{% load css_tag %}
+{% block content %}
+<div class="card card-login mx-auto mt-5 text-center">   
+<div class="card-header"><img class="img-fluid"  src="{% static 'img/Logo.png' %}" alt="" srcset=""></div>
+      {% if user.is_authenticated %}
+      <a class="btn btn-lg btn-outline-success btn-block " href="{% url 'menu' %}" ><i class="fas fa-home mr-2"></i>Volver al menú</a>
+      {% else %}
+      <p class="card-text mt-3">Ingresa tu cuenta</p>
+      <div class="card-body">
+        <form method="POST">
+            {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+           {% endif %}
+           {% csrf_token %}
+          <div class="form-group">
+            <div class="form-label-group">
+              {{form.username| addclass:"form-control mt-3 mt-md-0"}}
+              <label for="id_username">Correo</label>
+            </div>
+          </div>
+            <div class="form-label-group">
+              {{form.password| addclass:"form-control mt-3 mt-md-0"}}
+              <label for="id_password">Contraseña</label>
+            </div>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button> 
+          <a href="{% provider_login_url "facebook" method="js_sdk" %}" class="btn btn-block btn-social btn-facebook " style="background-color:#3b5998;text-align:center;color: whitesmoke;">
+            <span class="fab fa-facebook text-light mr-2 "></span>Ingresa con Facebook</a>
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="{% url 'registrar' %}">No tienes cuenta? Registrate!</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
+    

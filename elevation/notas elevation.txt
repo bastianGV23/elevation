@@ -1,0 +1,12 @@
+pip install django-allauth
+pip install django-extensions
+pip install django-progressive-web-app
+manage.py runserver localhost:8000
+---------------------------------------------
+Cuenta de facebook: asdanation1@gmail.com
+Contraseña: bastian45
+---------------------------------------------
+PARA EL ADMIN
+
+user:a@admin.com
+pass:1234
